@@ -4,4 +4,4 @@
 
 欢迎使用该模型的学生进行pull request,来这里给后人“做点贡献”。
 
-![AMPT](https::github.com/Jinxiaohai/A-multiphase-transport-model/raw/master/AMPT.png)
+![AMPT](https://github.com/Jinxiaohai/A-multiphase-transport-model/raw/master/AMPT.png)
