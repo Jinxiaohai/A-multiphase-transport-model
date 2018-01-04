@@ -4,4 +4,4 @@
 
 欢迎使用该模型的学生进行pull request,来这里给后人“做点贡献”。
 
-[AMPT](AMPT.pdf)
+[AMPT](AMPT.png)
