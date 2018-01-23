@@ -12,7 +12,7 @@ cc      SAVE /HIJDAT/
         COMMON/LUDAT1/MSTU(200),PARU(200),MSTJ(200),PARJ(200)
 cc      SAVE /LUDAT1/
         EXTERNAL FNKICK,FNKC2,FNSTRU,FNSTRM,FNSTRS
-        SAVE   
+        SAVE
         CALL TITLE
         IHNT2(1)=IAP
         IHNT2(2)=IZP
@@ -21,13 +21,19 @@ cc      SAVE /LUDAT1/
         IHNT2(5)=0
         IHNT2(6)=0
 C
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  给出弹核和靶核的静止质量hint1(8), hint1(9)，为啥取最大的质量？？
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         HINT1(8)=MAX(ULMASS(2112),ULMASS(2212))
         HINT1(9)=HINT1(8)
 C
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  弹核和靶核种类的确定
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         IF(PROJ.NE.'A') THEN
                 IF(PROJ.EQ.'P') THEN
                     IHNT2(5)=2212
-                ELSE IF(PROJ.EQ.'PBAR') THEN 
+                ELSE IF(PROJ.EQ.'PBAR') THEN
                     IHNT2(5)=-2212
                 ELSE IF(PROJ.EQ.'PI+') THEN
                     IHNT2(5)=211
@@ -50,7 +56,7 @@ C
         IF(TARG.NE.'A') THEN
                 IF(TARG.EQ.'P') THEN
                     IHNT2(6)=2212
-                ELSE IF(TARG.EQ.'PBAR') THEN 
+                ELSE IF(TARG.EQ.'PBAR') THEN
                     IHNT2(6)=-2212
                 ELSE IF(TARG.EQ.'PI+') THEN
                     IHNT2(6)=211
@@ -71,6 +77,9 @@ C
                 HINT1(9)=ULMASS(IHNT2(6))
         ENDIF
 C...Switch off decay of pi0, K0S, Lambda, Sigma+-, Xi0-, Omega-.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  是否关掉下面这些粒子的衰变,缺省值为1.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         IF(IHPR2(12).GT.0) THEN
         CALL LUGIVE('MDCY(C221,1)=0')
 clin-11/07/00 no K* decays:
@@ -156,6 +165,9 @@ clin-7/2011-end
                 MSTU(25)=0
                 MSTU(26)=0
         ENDIF
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  fragmentation parameter a, b.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 clin    parj(41) and (42) are a, b parameters in Lund, read from input.ampt:
 c        PARJ(41)=HIPR1(3)
 c        PARJ(42)=HIPR1(4)
@@ -174,8 +186,8 @@ clin  parj(2) is gamma_s=P(s)/P(u), kappa propto 1/b/(2+a) assumed.
 clin-10/31/00 update when string tension is changed:
         HIPR1(2)=PARJ(21)
 clin-4/2015: set upper limit for gamma_s=P(s)/P(u) to 0.4
-c     (to limit strangeness enhancement when string tension is strongly 
-c     increased due to using a very low value of parameter b in Lund 
+c     (to limit strangeness enhancement when string tension is strongly
+c     increased due to using a very low value of parameter b in Lund
 c     symmetric splitting function as done in arXiv:1403.6321):
         PARJ(2)=min(PARJ(2),0.4)
 C                        ******** set up for jetset
@@ -196,9 +208,15 @@ C                        ******** set up for jetset
            HINT1(1)=EFRM
            HINT1(2)=0.0
            HINT1(3)=0.0
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  质心系中每核子核子碰撞的能量已经静止质量。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
            DD1=dble(HINT1(1))
            DD2=dble(HINT1(8))
            DD3=dble(HINT1(9))
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  快度计算
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
            DD4=DSQRT(1.D0-4.D0*DD2**2/DD1**2)
            HINT1(4)=0.5*sngl(DLOG((1.D0+DD4)/(1.D0-DD4)))
            DD4=DSQRT(1.D0-4.D0*DD3**2/DD1**2)
@@ -249,7 +267,7 @@ C                ********booking for x distribution of valence quarks
         EFRAME='Ecm'
         IF(FRAME.EQ.'LAB') EFRAME='Elab'
         WRITE(6,100) EFRAME,EFRM,PROJ,IHNT2(1),IHNT2(2),
-     &               TARG,IHNT2(3),IHNT2(4) 
+     &               TARG,IHNT2(3),IHNT2(4)
 100        FORMAT(
      &        10X,'**************************************************'/
      &        10X,'*',48X,'*'/

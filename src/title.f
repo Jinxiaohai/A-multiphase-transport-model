@@ -1,7 +1,11 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  输出核易经三个字
+cccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         SUBROUTINE TITLE
       COMMON/RNDF77/NSEED
 cc      SAVE /RNDF77/
-        SAVE   
+        SAVE
         WRITE(6,200)
 clin-8/15/02 f77:
 c200        FORMAT(//10X,

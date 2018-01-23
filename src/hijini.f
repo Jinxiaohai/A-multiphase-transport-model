@@ -19,7 +19,7 @@ c        COMMON/HJJET4/NDR,IADR(900,2),KFDR(900),PDR(900,5)
 cc      SAVE /HJJET4/
       COMMON/RNDF77/NSEED
 cc      SAVE /RNDF77/
-        SAVE   
+        SAVE
 C****************Reset the momentum of initial particles************
 C             and assign flavors to the proj and targ string       *
 C*******************************************************************
@@ -31,10 +31,18 @@ C*******************************************************************
         IF(IHNT2(6).NE.0) IPT=IHNT2(6)
 C                ********in case the proj or targ is a hadron.
 C
+
+
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  遍历弹核的每个核子
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         DO 100 I=1,IHNT2(1)
         PP(I,1)=0.0
         PP(I,2)=0.0
         PP(I,3)=SQRT(HINT1(1)**2/4.0-HINT1(8)**2)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  能量和质量
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         PP(I,4)=HINT1(1)/2
         PP(I,5)=HINT1(8)
         PP(I,6)=0.0
@@ -47,6 +55,9 @@ ctest OFF
         PP(I, 11) = 0.0
         PP(I, 12) = 0.0
 cbzdbg2/22/99end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  NFP(I,3)是present ID, 而NFP(I,4)是original ID. 先初始质子的。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         NFP(I,3)=IPP
         NFP(I,4)=IPP
         NFP(I,5)=0
@@ -61,15 +72,25 @@ cbzdbg2/22/99end
 clin-12/2012 correct NN differential cross section in HIJING:
         IF(I.GT.ABS(IHNT2(2))) NFP(I,4)=2112
         CALL ATTFLV(NFP(I,3),IDQ,IDQQ)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  NFP(I,1)是弹核中夸克的味道，NFP(I,2)是弹核中diquark的味道。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         NFP(I,1)=IDQ
         NFP(I,2)=IDQQ
         NFP(I,15)=-1
         IF(ABS(IDQ).GT.1000.OR.(ABS(IDQ*IDQQ).LT.100.AND.
      &                RANART(NSEED).LT.0.5)) NFP(I,15)=1
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  PP(I, 14):the mass of the projectile quark.
+cccccc  PP(I, 15):the mass of the projectile diquark.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         PP(I,14)=ULMASS(IDQ)
         PP(I,15)=ULMASS(IDQQ)
 100        CONTINUE
 C
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  同理初始化靶核的信息
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         DO 200 I=1,IHNT2(3)
         PT(I,1)=0.0
         PT(I,2)=0.0

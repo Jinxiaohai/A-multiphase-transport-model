@@ -1,8 +1,11 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  这是哪个函数？？？
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         SUBROUTINE HIFUN(I,XMIN,XMAX,FHB)
         COMMON/HIJHB/RR(10,201),XX(10,201)
 cc      SAVE /HIJHB/
         EXTERNAL FHB
-        SAVE   
+        SAVE
         FNORM=GAUSS1(FHB,XMIN,XMAX,0.001)
         DO 100 J=1,201
                 XX(I,J)=XMIN+(XMAX-XMIN)*(J-1)/200.0

@@ -41,23 +41,26 @@ cc      SAVE /cprod/
 cc      SAVE /rndm2/
         common/anim/nevent,isoft,isflag,izpc
 cc      SAVE /anim/
-        common /frzprc/ 
+        common /frzprc/
      &       gxfrz(MAXPTN), gyfrz(MAXPTN), gzfrz(MAXPTN), ftfrz(MAXPTN),
      &       pxfrz(MAXPTN), pyfrz(MAXPTN), pzfrz(MAXPTN), efrz(MAXPTN),
-     &       xmfrz(MAXPTN), 
+     &       xmfrz(MAXPTN),
      &       tfrz(302), ifrz(MAXPTN), idfrz(MAXPTN), itlast
 cc      SAVE /frzprc/
-        SAVE   
+        SAVE
 clin-6/06/02 no momentum change for partons already frozen out,
 c     however, spatial upgrade is needed to ensure overall system freezeout:
-      if(isoft.eq.5) then
-         if(ifrz(iscat).eq.1.or.ifrz(jscat).eq.1) then
-            last(iscat) = jscat
-            last(jscat) = iscat
-            return
-         endif
-      endif
+c$$$      if(isoft.eq.5) then
+c$$$         if(ifrz(iscat).eq.1.or.ifrz(jscat).eq.1) then
+c$$$            last(iscat) = jscat
+c$$$            last(jscat) = iscat
+c$$$            return
+c$$$         endif
+c$$$      endif
 clin-6/06/02-end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  iff被用来随机的来决定相互作用是吸引还是排斥
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c       iff is used to randomize the interaction to have both attractive and
 c        repulsive
         iff = - iff
@@ -144,7 +147,7 @@ cc      SAVE pxnew, ..., values for later use.
         call getht(iscat, jscat, pp2, that)
         theta = dacos(that / (2d0 * pp2) + 1d0)
         theta = dble(iff) * theta
-c       we boost to the cm frame, get rotation axis, and rotate 1 particle 
+c       we boost to the cm frame, get rotation axis, and rotate 1 particle
 c       momentum
         call lorenz(t1, x1, y1, z1, bex, bey, bez)
         x1 = pxnew
@@ -177,7 +180,7 @@ c       boost the 2 particle 4 momentum back to lab frame
         py(iscat) = pynew
         pz(iscat) = pznew
         e(iscat) = enenew
-        call lorenz(e2, px2, py2, pz2, -bex, -bey, -bez)        
+        call lorenz(e2, px2, py2, pz2, -bex, -bey, -bez)
         px(jscat) = pxnew
         py(jscat) = pynew
         pz(jscat) = pznew

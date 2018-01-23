@@ -20,20 +20,36 @@ cc      SAVE /loclco/
      &     K2SG(MAXSTR,100),PXSG(MAXSTR,100),PYSG(MAXSTR,100),
      &     PZSG(MAXSTR,100),PESG(MAXSTR,100),PMSG(MAXSTR,100)
 cc      SAVE /HJJET2/
-      SAVE   
-c      
+      SAVE
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  遍历所有的核子，初始化每个核子的IOVER.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       do 1001 ISG=1, NSG
          IOVER(ISG)=0
  1001 continue
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  再AMPT中首先是完成介子的强子化，然后才是重子的强子化。
+cccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 C1     meson q coalesce with all available qbar:
       do 150 ISG=1,NSG
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc NJSGS(I)(I=1, NSG) 第I个核子中部分子的个数， IOVER是个状态flag.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          if(NJSGS(ISG).ne.2.or.IOVER(ISG).eq.1) goto 150
 C     DETERMINE CURRENT RELATIVE DISTANCE AND MOMENTUM:
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc K2SGS(ISG, 1) 在第ISG个核子里面的第一个部分子的ID。(即正夸克q)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          if(K2SGS(ISG,1).lt.0) then
             write(6,*) 'Antiquark appears in quark loop; stop'
             stop
          endif
-c         
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc 得到介子的两个部分子信息。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          do 1002 j=1,2
             ftp(j)=ftsgs(isg,j)
             gxp(j)=gxsgs(isg,j)
@@ -45,14 +61,23 @@ c
             pmp(j)=pmsgs(isg,j)
             pep(j)=pesgs(isg,j)
  1002    continue
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  下面的函数只是得到相同时刻两个价夸克的空间距离(二者的质心系)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          call locldr(2,drlocl)
          dr0=drlocl
 c     dp0^2 defined as (p1+p2)^2-(m1+m2)^2:
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  dp0为动量空间二者的动量距离(二者的实验室系)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          dp0=dsqrt(2*(pep(1)*pep(2)-pxp(1)*pxp(2)
      &        -pyp(1)*pyp(2)-pzp(1)*pzp(2)-pmp(1)*pmp(2)))
 c
          do 120 JSG=1,NSG
 c     skip default or unavailable antiquarks:
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  跳过自己本身和已经使用过的parton.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
             if(JSG.eq.ISG.or.IOVER(JSG).eq.1) goto 120
             if(NJSGS(JSG).eq.2) then
                ipmin=2
@@ -63,6 +88,9 @@ c     skip default or unavailable antiquarks:
             else
                goto 120
             endif
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  计算qqbar之间的动量距离
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
             do 100 ip=ipmin,ipmax
                dplocl=dsqrt(2*(pep(1)*pesgs(jsg,ip)
      1              -pxp(1)*pxsgs(jsg,ip)
@@ -70,6 +98,9 @@ c     skip default or unavailable antiquarks:
      3              -pzp(1)*pzsgs(jsg,ip)
      4              -pmp(1)*pmsgs(jsg,ip)))
 c     skip if outside of momentum radius:
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  大于组合的动量半径, goto 120
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
                if(dplocl.gt.dpcoal) goto 120
                ftp(2)=ftsgs(jsg,ip)
                gxp(2)=gxsgs(jsg,ip)
@@ -82,6 +113,9 @@ c     skip if outside of momentum radius:
                pep(2)=pesgs(jsg,ip)
                call locldr(2,drlocl)
 c     skip if outside of spatial radius:
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  大于组合的空间半径, goto 120
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
                if(drlocl.gt.drcoal) goto 120
 c     q_isg coalesces with qbar_jsg:
                if((dp0.gt.dpcoal.or.dr0.gt.drcoal)
@@ -92,9 +126,16 @@ c     q_isg coalesces with qbar_jsg:
                endif
  100        continue
  120     continue
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  满足条件，进行强子化的。IOVER(ISG) = 1
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          if(dp0.le.dpcoal.and.dr0.le.drcoal) IOVER(ISG)=1
  150  continue
 c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  下面的过程和上面的正好相反。
+cccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 C2     meson qbar coalesce with all available q:
       do 250 ISG=1,NSG
          if(NJSGS(ISG).ne.2.or.IOVER(ISG).eq.1) goto 250
@@ -158,6 +199,11 @@ c     qbar_isg coalesces with q_jsg:
          if(dp0.le.dpcoal.and.dr0.le.drcoal) IOVER(ISG)=1
  250  continue
 c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  重子的组合
+cccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
 C3     baryon q (antibaryon qbar) coalesce with all available q (qbar):
       do 350 ISG=1,NSG
          if(NJSGS(ISG).ne.3.or.IOVER(ISG).eq.1) goto 350
@@ -253,7 +299,7 @@ c     q_isg may coalesce with q_jsg for a baryon:
      1        .and.dp1(3).le.dpcoal.and.dr1(3).le.drcoal)
      2        IOVER(ISG)=1
  350  continue
-c      
+c
       RETURN
       END
 c=======================================================================

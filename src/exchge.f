@@ -1,3 +1,9 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  注意ipi和ipj这两个变量
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  将第isg个核子的第ipi部分子同第jsg个核子的第ipj部分子进行交换
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       SUBROUTINE exchge(isg,ipi,jsg,ipj)
 c
       implicit double precision  (a-h, o-z)
@@ -7,7 +13,7 @@ c
      &     GYSGS(MAXSTR,3),GZSGS(MAXSTR,3),FTSGS(MAXSTR,3),
      &     K1SGS(MAXSTR,3),K2SGS(MAXSTR,3),NJSGS(MAXSTR)
 cc      SAVE /SOFT/
-      SAVE   
+      SAVE
 c
       k1=K1SGS(isg,ipi)
       k2=K2SGS(isg,ipi)

@@ -57,7 +57,7 @@ cc      SAVE /HJJET4/
       COMMON/RNDF77/NSEED
 cc      SAVE /RNDF77/
 C
-        COMMON/LUJETS/N,K(9000,5),P(9000,5),V(9000,5)   
+        COMMON/LUJETS/N,K(9000,5),P(9000,5),V(9000,5)
 cc      SAVE /LUJETS/
         COMMON/LUDAT1/MSTU(200),PARU(200),MSTJ(200),PARJ(200)
 cc      SAVE /LUDAT1/
@@ -96,7 +96,7 @@ cbz1/25/99end
 clin-2/25/00
         COMMON /frzout/ xnprod(30),etprod(30),xnfrz(30),etfrz(30),
      & dnprod(30),detpro(30),dnfrz(30),detfrz(30)
-cc      SAVE /frzout/ 
+cc      SAVE /frzout/
 clin-4/11/01 soft:
       common/anim/nevent,isoft,isflag,izpc
 cc      SAVE /anim/
@@ -127,7 +127,10 @@ clin-8/2015:
         common /precpa/vxp0(MAXPTN),vyp0(MAXPTN),vzp0(MAXPTN),
      1       xstrg0(MAXPTN),ystrg0(MAXPTN),
      2       xstrg(MAXPTN),ystrg(MAXPTN),istrg0(MAXPTN),istrg(MAXPTN)
-        SAVE   
+        SAVE
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  碰撞参数的最大值和最小值
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         BMAX=MIN(BMAX0,HIPR1(34)+HIPR1(35))
         BMIN=MIN(BMIN0,BMAX)
         IF(IHNT2(1).LE.1 .AND. IHNT2(3).LE.1) THEN
@@ -135,9 +138,12 @@ clin-8/2015:
                 BMAX=2.5*SQRT(HIPR1(31)*0.1/HIPR1(40))
         ENDIF
 C                        ********HIPR1(31) is in mb =0.1fm**2
-C*******THE FOLLOWING IS TO SELECT THE COORDINATIONS OF NUCLEONS 
+C*******THE FOLLOWING IS TO SELECT THE COORDINATIONS OF NUCLEONS
 C       BOTH IN PROJECTILE AND TARGET NUCLEAR( in fm)
 C
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  给出弹核的每个核子的三坐标
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         YP(1,1)=0.0
         YP(2,1)=0.0
         YP(3,1)=0.0
@@ -160,13 +166,16 @@ C                ********choose phi form uniform phi distr 0 to 2*pi
                 DNBP3=(YP(3,KP)-YP(3,KP2))**2
                 DNBP=DNBP1+DNBP2+DNBP3
                 IF(DNBP.LT.HIPR1(29)*HIPR1(29)) GO TO 5
-C                        ********two neighbors cannot be closer than 
+C                        ********two neighbors cannot be closer than
 C                                HIPR1(29)
 8        CONTINUE
 10        CONTINUE
-clin-1/27/03 Hulthen wavefn for deuteron borrowed from hijing1.382.f, 
-c     but modified [divide by 2, & x(p)=-x(n)]: 
+clin-1/27/03 Hulthen wavefn for deuteron borrowed from hijing1.382.f,
+c     but modified [divide by 2, & x(p)=-x(n)]:
 c     (Note: hijing1.383.f has corrected this bug in hijing1.382.f)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  氘核的特殊处理
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         if(IHNT2(1).EQ.2) then
            rnd1=max(RANART(NSEED),1.0e-20)
            rnd2=max(RANART(NSEED),1.0e-20)
@@ -202,6 +211,9 @@ c     p & n has opposite coordinates in the deuteron frame:
 12        CONTINUE
 C
 C******************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc 初始化靶核每个核子的三坐标
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 14        YT(1,1)=0.0
         YT(2,1)=0.0
         YT(3,1)=0.0
@@ -224,13 +236,16 @@ C                ********chose phi form uniform phi distr 0 to 2*pi
                 DNBT3=(YT(3,KT)-YT(3,KT2))**2
                 DNBT=DNBT1+DNBT2+DNBT3
                 IF(DNBT.LT.HIPR1(29)*HIPR1(29)) GO TO 15
-C                        ********two neighbors cannot be closer than 
+C                        ********two neighbors cannot be closer than
 C                                HIPR1(29)
 18        CONTINUE
 20        CONTINUE
 c
-clin-1/27/03 Hulthen wavefn for deuteron borrowed from hijing1.382.f, 
+clin-1/27/03 Hulthen wavefn for deuteron borrowed from hijing1.382.f,
 c     but modified [divide by 2, & x(p)=-x(n)]:
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  氘核的特殊处理
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         if(IHNT2(3).EQ.2) then
            rnd1=max(RANART(NSEED),1.0e-20)
            rnd2=max(RANART(NSEED),1.0e-20)
@@ -264,6 +279,9 @@ c
         YT(3,J)=Y3
 22        CONTINUE
 C********************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  HIJING初始化失败的次数。(input.ampt中设定的上限是1000)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 24        MISS=-1
 50        MISS=MISS+1
 clin-6/2009
@@ -292,13 +310,16 @@ C                        ********Initialize for a new event
         NINP=0
         NSG=0
         NCOLT=0
-C****        BB IS THE ABSOLUTE VALUE OF IMPACT PARAMETER,BB**2 IS 
-C       RANDOMLY GENERATED AND ITS ORIENTATION IS RANDOMLY SET 
+C****        BB IS THE ABSOLUTE VALUE OF IMPACT PARAMETER,BB**2 IS
+C       RANDOMLY GENERATED AND ITS ORIENTATION IS RANDOMLY SET
 C       BY THE ANGLE PHI  FOR EACH COLLISION.******************
 C
         BB=SQRT(BMIN**2+RANART(NSEED)*(BMAX**2-BMIN**2))
 cbz6/28/99 flow1
 clin-2/2012:
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  反应平面的控制。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         PHI=0.
         if(iphirp.eq.1) PHI=2.0*HIPR1(40)*RANART(NSEED)
         phiRP=phi
@@ -409,8 +430,8 @@ C*****************************************************************
 C                ********When IHPR2(8)=0 no jets are produced
         IF(NFP(JP,6).LT.0 .OR. NFT(JT,6).LT.0) GO TO 160
 C                ********jets can not be produced for (JP,JT)
-C                        because not enough energy avaible for 
-C                                JP or JT 
+C                        because not enough energy avaible for
+C                                JP or JT
         R2=SCIP(JP,JT)
         HINT1(18)=SJIP(JP,JT)
         TT=ROMG(R2)*HINT1(18)/HIPR1(31)
@@ -474,11 +495,11 @@ C                                already been produced here
 C                ********create a hard interaction with specified P_T
 c                                 when IHPR2(3)>0
         IF(IHPR2(9).EQ.1.AND.JP.EQ.JPMINI.AND.JT.EQ.JTMINI) GO TO 110
-C                ********create at least one pair of mini jets 
+C                ********create at least one pair of mini jets
 C                        when IHPR2(9)=1
 C
-clin-4/15/2010 changed .LT. to .LE. to avoid problem when two sides are equal; 
-c     this problem may lead to a jet production when there should be none and 
+clin-4/15/2010 changed .LT. to .LE. to avoid problem when two sides are equal;
+c     this problem may lead to a jet production when there should be none and
 c     crash the run; crashes at low energies were reported by P. Bhaduri.
 c        IF(IHPR2(8).GT.0 .AND.RNIP(JP,JT).LT.EXP(-TT)*
 c     &                (1.0-EXP(-TTS))) GO TO 160
@@ -497,9 +518,9 @@ C
         DO 150 ijet=1,NJET
            CALL JETINI(JP,JT,0)
            CALL HIJHRD(JP,JT,JOUT,JFLG,1)
-C                ********JFLG=1 jets valence quarks, JFLG=2 with 
+C                ********JFLG=1 jets valence quarks, JFLG=2 with
 C                        gluon jet, JFLG=3 with q-qbar prod for
-C                        (JP,JT). If JFLG=0 jets can not be produced 
+C                        (JP,JT). If JFLG=0 jets can not be produced
 C                        this time. If JFLG=-1, error occured abandon
 C                        this event. JOUT is the total hard scat for
 C                        (JP,JT) up to now.
@@ -533,7 +554,7 @@ clin-2/2012:
 c           call minijet_out(BB)
            call minijet_out(BB,phiRP)
            if(pttrig.gt.0.and.ntrig.eq.0) goto 50
-clin-4/2012 
+clin-4/2012
 clin-6/2009 write out initial transverse positions of initial nucleons:
 c           write(94,*) IAEVT,MISS,IHNT2(1),IHNT2(3)
         DO 201 JP=1,IHNT2(1)
@@ -542,7 +563,7 @@ c           write(94,203) YP(1,JP)+0.5*BB, YP(2,JP), JP, NFP(JP,5)
 clin-2/2012:
 c       write(94,203) YP(1,JP)+0.5*BB, YP(2,JP), JP, NFP(JP,5),yp(3,jp)
 clin-4/2012:
-c           write(94,203) YP(1,JP)+0.5*BB*cos(phiRP), 
+c           write(94,203) YP(1,JP)+0.5*BB*cos(phiRP),
 c     1 YP(2,JP)+0.5*BB*sin(phiRP), JP, NFP(JP,5),yp(3,jp)
            IF(NFP(JP,5).GT.2) THEN
               NINP=NINP+1
@@ -556,7 +577,7 @@ c           write(94,203) YT(1,JT)-0.5*BB, YT(2,JT), -JT, NFT(JT,5)
 clin-2/2012:
 c       write(94,203) YT(1,JT)-0.5*BB, YT(2,JT), -JT, NFT(JT,5),yt(3,jt)
 clin-4/2012:
-c           write(94,203) YT(1,JT)-0.5*BB*cos(phiRP), 
+c           write(94,203) YT(1,JT)-0.5*BB*cos(phiRP),
 c     1 YT(2,JT)-0.5*BB*sin(phiRP), -JT, NFT(JT,5),yt(3,jt)
            IF(NFT(JT,5).GT.2) THEN
               NINTHJ=NINTHJ+1
@@ -566,7 +587,7 @@ c     1 YT(2,JT)-0.5*BB*sin(phiRP), -JT, NFT(JT,5),yt(3,jt)
  202    continue
 c 203    format(f10.3,1x,f10.3,2(1x,I5))
 c 203    format(f10.3,1x,f10.3,2(1x,I5),1x,f10.3)
-c     
+c
 c*******************************
 C********perform jet quenching for jets with PT>HIPR1(11)**********
         IF((IHPR2(8).NE.0.OR.IHPR2(3).NE.0).AND.IHPR2(4).GT.0.AND.
@@ -675,9 +696,9 @@ cbz1/27/99end
               LPART0(NPAR) = J
               ITYP0(NPAR) = K2SG(I, J)
 clin-7/20/01 add dble or sngl to make precisions consistent:
-              GX0(NPAR) = 0.5d0 * 
+              GX0(NPAR) = 0.5d0 *
      1             dble(YP(1, IASG(I, 1)) + YT(1, IASG(I, 2)))
-              GY0(NPAR) = 0.5d0 * 
+              GY0(NPAR) = 0.5d0 *
      2             dble(YP(2, IASG(I, 1)) + YT(2, IASG(I, 2)))
               GZ0(NPAR) = 0d0
               FT0(NPAR) = 0d0
@@ -773,7 +794,7 @@ clin-4/27/01:
         NPAR=0
         ISTR=0
 C
-clin  No fragmentation to hadrons, only on parton level, 
+clin  No fragmentation to hadrons, only on parton level,
 c     and transfer minijet and string data from HIJING to ZPC:
         MSTJ(1)=0
 clin-4/12/01 forbid soft radiation before ZPC to avoid small-mass strings,
@@ -846,7 +867,7 @@ c                    GY0(NPAR) = dble(YP(2, jjtp))
                  ELSE
 clin-2/2012:
 c                    GX0(NPAR) = dble(YT(1, jjtp)-0.5 * BB)
-c                    GY0(NPAR) = dble(YT(2, jjtp)) 
+c                    GY0(NPAR) = dble(YT(2, jjtp))
                     GX0(NPAR) = dble(YT(1, jjtp)-0.5*BB*cos(phiRP))
                     GY0(NPAR) = dble(YT(2, jjtp)-0.5*BB*sin(phiRP))
                     IITYP=ITYP0(NPAR)
@@ -1053,7 +1074,7 @@ c     partons in projectile or target strings:
            END IF
  1005   CONTINUE
 cbz1/25/99end
-clin-4/09/01  turn on fragmentation with soft radiation 
+clin-4/09/01  turn on fragmentation with soft radiation
 c     and jet order reversal to form hadrons after ZPC:
         MSTJ(1)=1
         IHPR2(1)=1
@@ -1063,7 +1084,7 @@ clin-4/13/01 allow small mass strings (D=1.5GeV):
 cbz2/4/99
         CALL HJANA2
 cbz2/4/99end
-clin-4/19/01-soft3, fragment strings, then convert hadrons to partons 
+clin-4/19/01-soft3, fragment strings, then convert hadrons to partons
 c     and input to ZPC:
         elseif(isoft.eq.3.or.isoft.eq.4.or.isoft.eq.5) then
 clin-4/24/01 normal fragmentation first:
@@ -1102,7 +1123,7 @@ C
 c     from Yasushi, to avoid violation of array limits:
 c                   IF(K(I,3).EQ.0 .OR. K(K(I,3),2).EQ.IDSTR) THEN
 clin-4/2008 to avoid out-of-bound error in K():
-c                   IF(K(I,3).EQ.0 .OR. 
+c                   IF(K(I,3).EQ.0 .OR.
 c     1 (K(I,3).ne.0.and.K(K(I,3),2).EQ.IDSTR)) THEN
 c                      KATT(NATT,3)=0
                    IF(K(I,3).EQ.0) THEN
@@ -1228,7 +1249,7 @@ c                      write(99,*) xstrg0(NATT),ystrg0(NATT),istrg0(NATT)
 c     1                  ,K(I,2),P(I, 1),P(I, 2),P(I, 3)
 c                   endif
 cbz11/11/98end
- 590                CONTINUE 
+ 590                CONTINUE
  600           CONTINUE
 C     ********Fragment the q-qq related string systems
         ENDIF
@@ -1250,7 +1271,7 @@ clin-11/11/03     set direct photons positions and time at formation:
                 GYAR(NATT) = rtdr(I,2)
                 GZAR(NATT) = 0.
                 FTAR(NATT) = 0.
-                ITYPAR(NATT) =KATT(NATT,1) 
+                ITYPAR(NATT) =KATT(NATT,1)
                 PXAR(NATT) = PATT(NATT,1)
                 PYAR(NATT) = PATT(NATT,2)
                 PZAR(NATT) = PATT(NATT,3)
@@ -1282,9 +1303,9 @@ c        WRITE (14, 395) ITEST, MUL, bimp, NELP,NINP,NELT,NINTHJ
         DO 1016 I = 1, MUL
 c           WRITE (14, 511) PX5(I), PY5(I), PZ5(I), ITYP5(I),
 c     &        XMASS5(I), E5(I)
-clin-4/2012 write parton freeze-out position in zpc.dat 
+clin-4/2012 write parton freeze-out position in zpc.dat
 c     for string melting version:
-c           WRITE (14, 512) ITYP5(I), PX5(I), PY5(I), PZ5(I), 
+c           WRITE (14, 512) ITYP5(I), PX5(I), PY5(I), PZ5(I),
 c     &        XMASS5(I), LSTRG1(I), LPART1(I), FT5(I)
            if(dmax1(abs(GX5(I)),abs(GY5(I)),abs(GZ5(I)),abs(FT5(I)))
      1          .lt.9999) then
@@ -1327,14 +1348,14 @@ c.....transfer data back from ZPC to HIJING
            PYSGS(NSTRG, NPART) = PY5(I)
            PZSGS(NSTRG, NPART) = PZ5(I)
            PMSGS(NSTRG, NPART) = XMASS5(I)
-clin-7/20/01 E5(I) does no include the finite parton mass XMASS5(I), 
+clin-7/20/01 E5(I) does no include the finite parton mass XMASS5(I),
 c     so define it anew:
 c           PESGS(NSTRG, NPART) = E5(I)
-c           if(abs(PZ5(i)/E5(i)).gt.0.9999999d0) 
+c           if(abs(PZ5(i)/E5(i)).gt.0.9999999d0)
 c     1          write(91,*) 'a',PX5(i),PY5(i),XMASS5(i),PZ5(i),E5(i)
            E5(I)=dsqrt(PX5(I)**2+PY5(I)**2+PZ5(I)**2+XMASS5(I)**2)
            PESGS(NSTRG, NPART) = E5(I)
-c           if(abs(PZ5(i)/E5(i)).gt.0.9999999d0) 
+c           if(abs(PZ5(i)/E5(i)).gt.0.9999999d0)
 c     1          write(91,*) 'b: new E5(I)=',E5(i)
 clin-7/20/01-end
            GXSGS(NSTRG, NPART) = GX5(I)
@@ -1380,7 +1401,7 @@ clin-4/30/01 convert partons to hadrons after ZPC:
  1006      continue
            goto 565
         endif
-clin-4/30/01-end        
+clin-4/30/01-end
         IF(IHPR2(20).NE.0) THEN
            DO 360 ISG=1,NSG
                 CALL HIJFRG(ISG,3,IERROR)
@@ -1425,7 +1446,7 @@ C
                    KATT(NATT,4)=K(I,1)
 c                   IF(K(I,3).EQ.0 .OR. K(K(I,3),2).EQ.IDSTR) THEN
 clin-4/2008:
-c                   IF(K(I,3).EQ.0 .OR. 
+c                   IF(K(I,3).EQ.0 .OR.
 c     1 (K(I,3).ne.0.and.K(K(I,3),2).EQ.IDSTR)) THEN
 c                      KATT(NATT,3)=0
                    IF(K(I,3).EQ.0) THEN
@@ -1476,11 +1497,11 @@ C
 c                  call lulist(2)
                   WRITE(6,*) 'error occured P&T, repeat the event'
                   WRITE(6,*) NTP,jjtp
-clin-6/2009 when this happens, the event will be repeated, 
+clin-6/2009 when this happens, the event will be repeated,
 c     and another record for the same event number will be written into
 c     zpc.dat, zpc.res, minijet-initial-beforePropagation.dat,
-c     parton-initial-afterPropagation.dat, parton-after-coalescence.dat, 
-c     and parton-collisionsHistory.dat. 
+c     parton-initial-afterPropagation.dat, parton-after-coalescence.dat,
+c     and parton-collisionsHistory.dat.
                    ENDIF
                    GO TO 50
                 ENDIF
@@ -1516,7 +1537,7 @@ C
                    KATT(NATT,4)=K(I,1)
 c                   IF(K(I,3).EQ.0 .OR. K(K(I,3),2).EQ.IDSTR) THEN
 clin-4/2008:
-c                   IF(K(I,3).EQ.0 .OR. 
+c                   IF(K(I,3).EQ.0 .OR.
 c     1 (K(I,3).ne.0.and.K(K(I,3),2).EQ.IDSTR)) THEN
 c                      KATT(NATT,3)=0
                    IF(K(I,3).EQ.0) THEN
@@ -1562,7 +1583,7 @@ cbz1/25/99end
                    PEAR(NATT) = P(I, 4)
                    XMAR(NATT) = P(I, 5)
 cbz11/11/98end
-390                CONTINUE 
+390                CONTINUE
 400           CONTINUE
 C     ********Fragment the q-qq related string systems
         ENDIF
@@ -1581,7 +1602,7 @@ clin-11/11/03     set direct photons positions and time at formation:
            GYAR(NATT) = rtdr(I,2)
            GZAR(NATT) = 0.
            FTAR(NATT) = 0.
-           ITYPAR(NATT) =KATT(NATT,1) 
+           ITYPAR(NATT) =KATT(NATT,1)
            PXAR(NATT) = PATT(NATT,1)
            PYAR(NATT) = PATT(NATT,2)
            PZAR(NATT) = PATT(NATT,3)
@@ -1595,7 +1616,7 @@ clin-4/19/01 soft3:
         DENGY=EATT/(IHNT2(1)*HINT1(6)+IHNT2(3)*HINT1(7))-1.0
         IF(ABS(DENGY).GT.HIPR1(43).AND.IHPR2(20).NE.0
      &     .AND.IHPR2(21).EQ.0) THEN
-         IF(IHPR2(10).NE.0) 
+         IF(IHPR2(10).NE.0)
      &        WRITE(6,*) 'Energy not conserved, repeat the event'
 c                call lulist(1)
          write(6,*) 'violated:EATT(GeV),NATT,B(fm)=',EATT,NATT,bimp
@@ -1608,18 +1629,18 @@ clin-4/2012 write out initial transverse positions of initial nucleons:
         write(94,*) IAEVT,MISS,IHNT2(1),IHNT2(3),bimp
         DO JP=1,IHNT2(1)
 clin-12/2012 write out present and original flavor code of nucleons:
-c           write(94,243) YP(1,JP)+0.5*BB*cos(phiRP), 
+c           write(94,243) YP(1,JP)+0.5*BB*cos(phiRP),
 c     1 YP(2,JP)+0.5*BB*sin(phiRP), JP, NFP(JP,5),yp(3,jp)
-           write(94,243) YP(1,JP)+0.5*BB*cos(phiRP), 
+           write(94,243) YP(1,JP)+0.5*BB*cos(phiRP),
      1 YP(2,JP)+0.5*BB*sin(phiRP),JP, NFP(JP,5),yp(3,jp),
      2 NFP(JP,3),NFP(JP,4)
         ENDDO
         DO JT=1,IHNT2(3)
 c target nucleon # has a minus sign for distinction from projectile:
 clin-12/2012 write out present and original flavor code of nucleons:
-c           write(94,243) YT(1,JT)-0.5*BB*cos(phiRP), 
+c           write(94,243) YT(1,JT)-0.5*BB*cos(phiRP),
 c     1 YT(2,JT)-0.5*BB*sin(phiRP), -JT, NFT(JT,5),yt(3,jt)
-           write(94,243) YT(1,JT)-0.5*BB*cos(phiRP), 
+           write(94,243) YT(1,JT)-0.5*BB*cos(phiRP),
      1 YT(2,JT)-0.5*BB*sin(phiRP), -JT, NFT(JT,5),yt(3,jt),
      2 NFT(JT,3),NFT(JT,4)
         ENDDO

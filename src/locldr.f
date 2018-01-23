@@ -9,7 +9,7 @@ cc      SAVE /loclco/
 cc      SAVE /prtn23/
       common /lor/ enenew, pxnew, pynew, pznew
 cc      SAVE /lor/
-      SAVE   
+      SAVE
 c     for 2-body kinematics:
       if(icall.eq.2) then
          etot=pep(1)+pep(2)
@@ -17,6 +17,9 @@ c     for 2-body kinematics:
          bey=(pyp(1)+pyp(2))/etot
          bez=(pzp(1)+pzp(2))/etot
 c     boost the reference frame down by beta to get to the pair rest frame:
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  对介子的两个价夸克进行BOOST变换回到二者的质心系中。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          do 1001 j=1,2
             beta2 = bex ** 2 + bey ** 2 + bez ** 2
             gam = 1.d0 / dsqrt(1.d0 - beta2)
@@ -41,7 +44,10 @@ c
             pzp0(j)=pznew
             pep0(j)=enenew
  1001    continue
-c     
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  得到两个价夸克的时间冻结先后信息
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          if(ftp0(1).ge.ftp0(2)) then
             ilate=1
             iearly=2
@@ -50,14 +56,23 @@ c
             iearly=1
          endif
          ft0fom=ftp0(ilate)
-c     
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  对先冻结的那个部分子进行演化，给出相同时刻时两个部分子的信息。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          dt0=ftp0(ilate)-ftp0(iearly)
          gxp0(iearly)=gxp0(iearly)+pxp0(iearly)/pep0(iearly)*dt0
          gyp0(iearly)=gyp0(iearly)+pyp0(iearly)/pep0(iearly)*dt0
          gzp0(iearly)=gzp0(iearly)+pzp0(iearly)/pep0(iearly)*dt0
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  给出两个部分子在相同时刻的空间距离
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          drlocl=dsqrt((gxp0(ilate)-gxp0(iearly))**2
      1        +(gyp0(ilate)-gyp0(iearly))**2
      2        +(gzp0(ilate)-gzp0(iearly))**2)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc 下面的三个价夸克的重子和上面的介子的处理完全类似
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c     for 3-body kinematics, used for baryons formation:
       elseif(icall.eq.3) then
          etot=pep(1)+pep(2)+pep(3)
@@ -82,7 +97,7 @@ c     boost the reference frame down by beta to get to the 3-parton rest frame:
             pzp0(j)=pznew
             pep0(j)=enenew
  1002    continue
-c     
+c
          if(ftp0(1).gt.ftp0(2)) then
             ilate=1
             if(ftp0(3).gt.ftp0(1)) ilate=3
@@ -91,7 +106,7 @@ c
             if(ftp0(3).ge.ftp0(2)) ilate=3
          endif
          ft0fom=ftp0(ilate)
-c     
+c
          if(ilate.eq.1) then
             imin=2
             imax=3
@@ -105,7 +120,7 @@ c
             imax=2
             istep=1
          endif
-c     
+c
          do 1003 iearly=imin,imax,istep
             dt0=ftp0(ilate)-ftp0(iearly)
             gxp0(iearly)=gxp0(iearly)+pxp0(iearly)/pep0(iearly)*dt0

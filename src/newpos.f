@@ -1,3 +1,7 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  更新粒子的空间四坐标，gx, gy, gz 和 ft.
+cccccc  计算粒子的eta, rap 和 tau.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         subroutine newpos(t, i)
 c       this subroutine is used to calculate the 2 particle scattering
 c       get new position
@@ -11,11 +15,14 @@ cc      SAVE /para5/
 cc      SAVE /prec2/
         common /prec4/ vx(MAXPTN), vy(MAXPTN), vz(MAXPTN)
 cc      SAVE /prec4/
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  储存粒子的赝快度，快度和proper times
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         common /prec5/ eta(MAXPTN), rap(MAXPTN), tau(MAXPTN)
 cc      SAVE /prec5/
         common /ilist5/ ct(MAXPTN), ot(MAXPTN), tlarge
 cc      SAVE /ilist5/
-        SAVE   
+        SAVE
         dt1 = ct(i) - ft(i)
         gx(i) = gx(i) + vx(i) * dt1
         gy(i) = gy(i) + vy(i) * dt1

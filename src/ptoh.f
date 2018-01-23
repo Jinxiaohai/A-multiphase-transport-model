@@ -44,8 +44,8 @@ cc      SAVE /prtn23/
 cc      SAVE /nzpc/
       common /lor/ enenew, pxnew, pynew, pznew
 cc      SAVE /lor/
-      COMMON/LUDAT1/MSTU(200),PARU(200),MSTJ(200),PARJ(200) 
-cc      SAVE /LUDAT1/ 
+      COMMON/LUDAT1/MSTU(200),PARU(200),MSTJ(200),PARJ(200)
+cc      SAVE /LUDAT1/
 clin 4/19/2006
       common /lastt/itimeh,bimp
       COMMON/HJGLBR/NELT,NINTHJ,NELP,NINP
@@ -55,7 +55,7 @@ clin-5/2011
       common/input1/ MASSPR,MASSTA,ISEED,IAVOID,DT
 c
       dimension xmdiag(MAXSTR),indx(MAXSTR),ndiag(MAXSTR)
-      SAVE   
+      SAVE
 c
       call coales
 c     obtain particle mass here without broadening by Breit-Wigner width:
@@ -75,25 +75,34 @@ c     determine hadron flavor except (pi0,rho0,eta,omega):
               PX1=PXSGS(ISG,1)
               PY1=PYSGS(ISG,1)
               PZ1=PZSGS(ISG,1)
+
               K2=K2SGS(ISG,2)
               k2abs=iabs(k2)
               PX2=PXSGS(ISG,2)
               PY2=PYSGS(ISG,2)
               PZ2=PZSGS(ISG,2)
-c     5/02/01 try lowest spin states as first choices, 
+c     5/02/01 try lowest spin states as first choices,
 c     i.e. octet baryons and pseudoscalar mesons (ibs=2*baryonspin+1):
               e1=PESGS(ISG,1)
               e2=PESGS(ISG,2)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  直接的给出前两个部分的质量
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
               xmpair=dsqrt((e1+e2)**2-(px1+px2)**2-(py1+py2)**2
      1 -(pz1+pz2)**2)
               ibs=2
               imspin=0
+
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  介子的uubar, ddbar ?????? (pizero)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
               if(k1.eq.-k2.and.iabs(k1).le.2.
      1           and.NJSGS(ISG).eq.2) then
                nuudd=nuudd+1
                xmdiag(nuudd)=xmpair
                ndiag(nuudd)=natt
             endif
+
               K3=0
               if((isoft.eq.4.or.isoft.eq.5).and.NJSGS(ISG).eq.3) then
                K3=K2SGS(ISG,3)
@@ -108,55 +117,55 @@ c     i.e. octet baryons and pseudoscalar mesons (ibs=2*baryonspin+1):
 c*****     isoft=3 baryon decomposition is different:
               if(isoft.eq.3.and.
      1           (k1abs.gt.1000.or.k2abs.gt.1000)) then
-               if(k1abs.gt.1000) then
-                  kdq=k1abs
-                  kk=k2abs
-               else
-                  kdq=k2abs
-                  kk=k1abs
-               endif
-               ki=MOD(kdq/1000,10)
-               kj=MOD(kdq/100,10)
-               if(MOD(kdq,10).eq.1) then
-                  idqspn=0
-               else
-                  idqspn=1
-               endif
-c
-               if(kk.gt.ki) then
-                  ktemp=kk
-                  kk=kj
-                  kj=ki
-                  ki=ktemp
-               elseif(kk.gt.kj) then
-                  ktemp=kk
-                  kk=kj
-                  kj=ktemp
-               endif
-c     
-               if(ki.ne.kj.and.ki.ne.kk.and.kj.ne.kk) then
-                  if(idqspn.eq.0) then
-                     kf=1000*ki+100*kk+10*kj+ibs
-                  else
-                     kf=1000*ki+100*kj+10*kk+ibs
-                  endif
-               elseif(ki.eq.kj.and.ki.eq.kk) then
-c     can only be decuplet baryons:
-                  kf=1000*ki+100*kj+10*kk+4
-               else
-                  kf=1000*ki+100*kj+10*kk+ibs
-               endif
-c     form a decuplet baryon if the q+diquark mass is closer to its mass 
-c     (and if the diquark has spin 1):
-cc     for now only include Delta, which is present in ART:
-cc                 if(idqspn.eq.1.and.MOD(kf,10).eq.2) then
-               if(kf.eq.2112.or.kf.eq.2212) then
-                  if(abs(sngl(xmpair)-ULMASS(kf)).gt.
-     1                 abs(sngl(xmpair)-ULMASS(kf+2))) kf=kf+2
-               endif
-               if(k1.lt.0) kf=-kf
+c$$$               if(k1abs.gt.1000) then
+c$$$                  kdq=k1abs
+c$$$                  kk=k2abs
+c$$$               else
+c$$$                  kdq=k2abs
+c$$$                  kk=k1abs
+c$$$               endif
+c$$$               ki=MOD(kdq/1000,10)
+c$$$               kj=MOD(kdq/100,10)
+c$$$               if(MOD(kdq,10).eq.1) then
+c$$$                  idqspn=0
+c$$$               else
+c$$$                  idqspn=1
+c$$$               endif
+c$$$c
+c$$$               if(kk.gt.ki) then
+c$$$                  ktemp=kk
+c$$$                  kk=kj
+c$$$                  kj=ki
+c$$$                  ki=ktemp
+c$$$               elseif(kk.gt.kj) then
+c$$$                  ktemp=kk
+c$$$                  kk=kj
+c$$$                  kj=ktemp
+c$$$               endif
+c$$$c
+c$$$               if(ki.ne.kj.and.ki.ne.kk.and.kj.ne.kk) then
+c$$$                  if(idqspn.eq.0) then
+c$$$                     kf=1000*ki+100*kk+10*kj+ibs
+c$$$                  else
+c$$$                     kf=1000*ki+100*kj+10*kk+ibs
+c$$$                  endif
+c$$$               elseif(ki.eq.kj.and.ki.eq.kk) then
+c$$$c     can only be decuplet baryons:
+c$$$                  kf=1000*ki+100*kj+10*kk+4
+c$$$               else
+c$$$                  kf=1000*ki+100*kj+10*kk+ibs
+c$$$               endif
+c$$$c     form a decuplet baryon if the q+diquark mass is closer to its mass
+c$$$c     (and if the diquark has spin 1):
+c$$$cc     for now only include Delta, which is present in ART:
+c$$$cc                 if(idqspn.eq.1.and.MOD(kf,10).eq.2) then
+c$$$               if(kf.eq.2112.or.kf.eq.2212) then
+c$$$                  if(abs(sngl(xmpair)-ULMASS(kf)).gt.
+c$$$     1                 abs(sngl(xmpair)-ULMASS(kf+2))) kf=kf+2
+c$$$               endif
+c$$$               if(k1.lt.0) kf=-kf
 clin-6/22/01 isoft=4or5 baryons:
-              elseif((isoft.eq.4.or.isoft.eq.5).and.NJSGS(ISG).eq.3) 
+              elseif((isoft.eq.4.or.isoft.eq.5).and.NJSGS(ISG).eq.3)
      1              then
                if(k1abs.gt.k2abs) then
                   ki=k1abs
@@ -174,13 +183,13 @@ clin-6/22/01 isoft=4or5 baryons:
                else
                   kj=k3abs
                endif
-c     
+c
                if(ki.eq.kj.and.ki.eq.kk) then
 c     can only be decuplet baryons (Delta-,++, Omega):
                   ibs=4
                   kf=1000*ki+100*kj+10*kk+ibs
                elseif(ki.ne.kj.and.ki.ne.kk.and.kj.ne.kk) then
-c     form Lambda or Sigma according to 3-quark mass, 
+c     form Lambda or Sigma according to 3-quark mass,
 c     for now neglect decuplet (Sigma*0 etc) which is absent in ART:
                   ibs=2
                   kf1=1000*ki+100*kj+10*kk+ibs
@@ -223,7 +232,7 @@ c     do not form eta', only form phi from s-sbar, since no eta' in ART:
 c     form a vector meson if the q+qbar mass is closer to its mass:
                   if(MOD(iabs(kf),10).eq.1) then
                      if(abs(sngl(xmpair)-ULMASS(iabs(kf))).gt.
-     1                    abs(sngl(xmpair)-ULMASS(iabs(kf)+2))) 
+     1                    abs(sngl(xmpair)-ULMASS(iabs(kf)+2)))
      2                    kf=(iabs(kf)+2)*isign(1,kf)
                   endif
                endif
@@ -252,7 +261,7 @@ c     assume Npi0=(Npi+ + Npi-)/2, Nrho0=(Nrho+ + Nrho-)/2 on the average:
         if(nuudd.ne.0) then
          ppi0=float(npich/2)/float(nuudd)
          prho0=float(nrhoch/2)/float(nuudd)
-      endif      
+      endif
 c     determine diagonal mesons (pi0,rho0,eta and omega) from uubar/ddbar:
       npi0=0
       DO 1002 ISG = 1, NSG
@@ -270,7 +279,7 @@ c
 c
       DO 1003 ix=1,nuudd
          iuudd=indx(ix)
-         inatt=ndiag(iuudd)            
+         inatt=ndiag(iuudd)
          if(ix.le.npi0) then
             kf=111
          elseif(RANART(NSEED).le.(prho0/(1-ppi0+0.00001))) then
@@ -324,7 +333,7 @@ clin-9/2012: improve precision for argument in sqrt():
                p2=py1+py2
                p3=pz1+pz2
 c
-              elseif((isoft.eq.4.or.isoft.eq.5).and.NJSGS(ISG).eq.3) 
+              elseif((isoft.eq.4.or.isoft.eq.5).and.NJSGS(ISG).eq.3)
      1              then
                PX3=PXSGS(ISG,3)
                PY3=PYSGS(ISG,3)
@@ -418,7 +427,7 @@ c
 c     number of hadrons formed from partons inside ZPC:
       nattzp=natt
       MSTJ(24)=mstj24
-c      
+c
       RETURN
       END
 c=======================================================================

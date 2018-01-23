@@ -1,3 +1,7 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  THIS IS TO CALCULATE THE CROSS SECTIONS OF JET PRODUCTION AND
+cccccc  THE TOTAL INELASTIC CROSS SECTIONS.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         SUBROUTINE HIJCRS
 C        THIS IS TO CALCULATE THE CROSS SECTIONS OF JET PRODUCTION AND
 C        THE TOTAL INELASTIC CROSS SECTIONS.
@@ -6,7 +10,7 @@ cc      SAVE /HPARNT/
         COMMON/NJET/N,ipcrs
 cc      SAVE /NJET/
         EXTERNAL FHIN,FTOT,FNJET,FTOTJT,FTOTRG
-        SAVE   
+        SAVE
         IF(HINT1(1).GE.10.0) CALL CRSJET
 C                        ********calculate jet cross section(in mb)
 C

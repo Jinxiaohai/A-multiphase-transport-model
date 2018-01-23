@@ -1,8 +1,14 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  ID是强子的种类，IDQ和IDQQ是要进行返回的数值。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         SUBROUTINE ATTFLV(ID,IDQ,IDQQ)
       COMMON/RNDF77/NSEED
 cc      SAVE /RNDF77/
-        SAVE   
+        SAVE
 C
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  ID的数值小于100的处理。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         IF(ABS(ID).LT.100) THEN
                 NSIGN=1
                 IDQ=ID/100
@@ -20,13 +26,13 @@ C
 C                ********return ID of quark(IDQ) and anti-quark(IDQQ)
 C                        for pions and kaons
 c
-C        Return LU ID for quarks and diquarks for proton(ID=2212) 
+C        Return LU ID for quarks and diquarks for proton(ID=2212)
 C        anti-proton(ID=-2212) and nuetron(ID=2112)
-C        LU ID for d=1,u=2, (ud)0=2101, (ud)1=2103, 
+C        LU ID for d=1,u=2, (ud)0=2101, (ud)1=2103,
 C       (dd)1=1103,(uu)1=2203.
 C        Use SU(6)  weight  proton=1/3d(uu)1 + 1/6u(ud)1 + 1/2u(ud)0
 C                          nurtron=1/3u(dd)1 + 1/6d(ud)1 + 1/2d(ud)0
-C 
+C
         IDQ=2
         IF(ABS(ID).EQ.2112) IDQ=1
         IDQQ=2101
@@ -47,9 +53,9 @@ C
                 IDQ=-ID00
         ENDIF
         RETURN
-        END        
+        END
 C
 C*******************************************************************
-C        This subroutine performs elastic scatterings and possible 
+C        This subroutine performs elastic scatterings and possible
 C        elastic cascading within their own nuclei
 c*******************************************************************

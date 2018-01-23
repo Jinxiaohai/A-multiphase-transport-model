@@ -1,3 +1,6 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  三个参数分别是核子数，确定是弹核还是靶核以及径向的最大值。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         SUBROUTINE HIJWDS(IA,IDH,XHIGH)
 C     SETS UP HISTOGRAM IDH WITH RADII FOR
 C     NUCLEUS IA DISTRIBUTED ACCORDING TO THREE PARAM WOOD SAXON
@@ -8,10 +11,13 @@ cc      SAVE /WOOD/
 c        DIMENSION IAA(20),RR(20),DD(20),WW(20),RMS(20)
         DIMENSION IAA(20),RR(20),DD(20),WW(20)
         EXTERNAL RWDSAX,WDSAX
-        SAVE   
+        SAVE
 C
 C   PARAMETERS OF SPECIAL NUCLEI FROM ATOMIC DATA AND NUC DATA TABLES
 C     VOL 14, 5-6 1974
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  核子的半径分布
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         DATA IAA/2,4,12,16,27,32,40,56,63,93,184,197,208,7*0./
         DATA RR/0.01,.964,2.355,2.608,2.84,3.458,3.766,3.971,4.214,
      1        4.87,6.51,6.38,6.624,7*0./
