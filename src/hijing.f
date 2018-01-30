@@ -367,6 +367,9 @@ C                        ********perform elastic collisions
  65           SCIP(JP,JT)=R2
            RNIP(JP,JT)=RANTOT
            SJIP(JP,JT)=HINT1(18)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  到目前遭遇的碰撞的次數
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
            NCOLT=NCOLT+1
            IPCOL(NCOLT)=JP
            ITCOL(NCOLT)=JT
