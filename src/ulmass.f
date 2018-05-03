@@ -1,5 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-cccccc  参数KF为粒子的ID。
+cccccc  参数KF为粒子的ID。给出粒子的质量。
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       FUNCTION ULMASS(KF)
 C...Purpose: to give the mass of a particle/parton.

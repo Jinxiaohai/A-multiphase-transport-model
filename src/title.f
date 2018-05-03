@@ -1,6 +1,6 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cccccc  输出核易经三个字
-cccccc
+cccccc  was added by xiaohai.
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         SUBROUTINE TITLE
       COMMON/RNDF77/NSEED

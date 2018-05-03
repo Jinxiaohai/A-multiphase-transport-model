@@ -7,7 +7,7 @@ all: clean build
 
 .PHONY:build
 build:
-	@$(F77) -Wall $(SRCS) -o ampt
+	@$(F77) $(SRCS) -o ampt
 
 .PHONY:clean
 clean:

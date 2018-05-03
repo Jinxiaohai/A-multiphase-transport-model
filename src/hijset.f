@@ -14,6 +14,10 @@ cc      SAVE /LUDAT1/
         EXTERNAL FNKICK,FNKC2,FNSTRU,FNSTRM,FNSTRS
         SAVE
         CALL TITLE
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc 弹核和靶核种类的质量数和电荷数。
+cccccc IHNT2(5), IHNT2(6)是flavor code.
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         IHNT2(1)=IAP
         IHNT2(2)=IZP
         IHNT2(3)=IAT

@@ -1,5 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-cccccc  根据粒子的ID(kf)给出组分的种类。
+cccccc  根据粒子的ID(kf)给出组分的种类。给出LUCOMP的值。
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       FUNCTION LUCOMP(KF)
 C...Purpose: to compress the standard KF codes for use in mass and decay

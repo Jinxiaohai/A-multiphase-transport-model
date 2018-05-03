@@ -1,13 +1,21 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc b is beta.(beta(x), beta(y), beta(z)).
+cccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         subroutine lorntz(ilo,b,pi,pj)
 c       It uses to perform Lorentz (or inverse Lorentz) transformation
         dimension pi(4),pj(4),b(3)
-      SAVE   
+      SAVE
 c       dimension db(3)
         bb=b(1)*b(1)+b(2)*b(2)+b(3)*b(3)
         deno3=sqrt(1.-bb)
         if(deno3.eq.0.)deno3=1.e-10
         gam=1./deno3
         ga=gam*gam/(gam+1.)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc 根据ilo的值进行洛伦兹变换或者进行反变化。
+cccccc 标准的语句因该是if， else,而不是if， continue进行杂化。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         if(ilo.eq.1) goto 100
 c       Lorentz transformation
         pib=pi(1)*b(1)+pi(2)*b(2)+pi(3)*b(3)
@@ -23,7 +31,12 @@ c       db(i)=db(i)+b(i)*ga*drdb
         pi(4)=gam*(pi(4)-pib)
         pj(4)=gam*(pj(4)-pjb)
         return
-100     continue
+ 100    continue
+
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc 进行lorentz 反变换。
+cccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c       inverse Lorentz transformation
         pib=pi(1)*b(1)+pi(2)*b(2)+pi(3)*b(3)
         pjb=pj(1)*b(1)+pj(2)*b(2)+pj(3)*b(3)

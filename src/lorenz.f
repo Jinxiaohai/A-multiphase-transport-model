@@ -1,10 +1,18 @@
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc 进行粒子的lorenz变换。
+cccccc 变换的结果存储在全局的lor数据块中。
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       subroutine lorenz(energy, px, py, pz, bex, bey, bez)
 c     add in a cut for beta2 to prevent gam to be nan (infinity)
       implicit double precision (a-h, o-z)
       common /lor/ enenew, pxnew, pynew, pznew
 cc      SAVE /lor/
-      SAVE   
+      SAVE
       beta2 = bex ** 2 + bey ** 2 + bez ** 2
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccc  静止系的变换
+cccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (beta2 .eq. 0d0) then
          enenew = energy
          pxnew = px
@@ -19,18 +27,18 @@ clin-7/20/01:
 c         gam = 1.d0 / sqrt(1.d0 - beta2)
          gam = 1.d0 / dsqrt(1.d0 - beta2)
          enenew = gam * (energy - bex * px - bey * py - bez * pz)
-         pxnew = - gam * bex * energy + (1.d0 
+         pxnew = - gam * bex * energy + (1.d0
      &        + (gam - 1.d0) * bex ** 2 / beta2) * px
      &        + (gam - 1.d0) * bex * bey/beta2 * py
-     &        + (gam - 1.d0) * bex * bez/beta2 * pz     
-         pynew = - gam * bey * energy 
+     &        + (gam - 1.d0) * bex * bez/beta2 * pz
+         pynew = - gam * bey * energy
      &        + (gam - 1.d0) * bex * bey / beta2 * px
      &        + (1.d0 + (gam - 1.d0) * bey ** 2 / beta2) * py
-     &        + (gam - 1.d0) * bey * bez / beta2 * pz         
+     &        + (gam - 1.d0) * bey * bez / beta2 * pz
          pznew = - gam * bez * energy
      &        +  (gam - 1.d0) * bex * bez / beta2 * px
      &        + (gam - 1.d0) * bey * bez / beta2 * py
-     &        + (1.d0 + (gam - 1.d0) * bez ** 2 / beta2) * pz    
+     &        + (1.d0 + (gam - 1.d0) * bez ** 2 / beta2) * pz
       endif
       return
       end
