@@ -69,7 +69,7 @@ clin-4/2008:
 c      DIMENSION TEMP(3,MAXSTR),SKAON(7),SEKAON(7,0:200)
       DIMENSION TEMP(3,MAXSTR),SKAON(7),SEKAON(7,0:2000)
 cbz12/2/98
-      COMMON /INPUT2/ ILAB, MANYB, NTMAX, ICOLL, INSYS, IPOT, MODE, 
+      COMMON /INPUT2/ ILAB, MANYB, NTMAX, ICOLL, INSYS, IPOT, MODE,
      &   IMOMEN, NFREQ, ICFLOW, ICRHO, ICOU, KPOTEN, KMUL
 cc      SAVE /INPUT2/
       COMMON /INPUT3/ PLAB, ELAB, ZEROPT, B0, BI, BM, DENCUT, CYCBOX
@@ -92,7 +92,7 @@ cc      SAVE /ARERCP/
       COMMON /ARERC1/MULTI1(MAXR)
 cc      SAVE /ARERC1/
       COMMON /ARPRC1/ITYP1(MAXSTR, MAXR),
-     &     GX1(MAXSTR, MAXR), GY1(MAXSTR, MAXR), GZ1(MAXSTR, MAXR), 
+     &     GX1(MAXSTR, MAXR), GY1(MAXSTR, MAXR), GZ1(MAXSTR, MAXR),
      &     FT1(MAXSTR, MAXR),
      &     PX1(MAXSTR, MAXR), PY1(MAXSTR, MAXR), PZ1(MAXSTR, MAXR),
      &     EE1(MAXSTR, MAXR), XM1(MAXSTR, MAXR)
@@ -103,7 +103,7 @@ c
      &     , ET(MAXSTR, MAXR), LT(MAXSTR, MAXR), PROT(MAXSTR, MAXR)
       EXTERNAL IARFLV, INVFLV
 cbz11/16/98end
-      common /lastt/itimeh,bimp 
+      common /lastt/itimeh,bimp
 cc      SAVE /lastt/
       common/snn/efrm,npart1,npart2,epsiPz,epsiPt,PZPROJ,PZTARG
 cc      SAVE /snn/
@@ -120,7 +120,7 @@ cc      SAVE /RNDF77/
       COMMON/HPARNT/HIPR1(100),IHPR2(50),HINT1(100),IHNT2(50)
 clin-4/2008 zet() expanded to avoid out-of-bound errors:
       real zet(-45:45)
-      SAVE   
+      SAVE
       data zet /
      4     1.,0.,0.,0.,0.,
      3     1.,0.,0.,0.,0.,0.,0.,0.,0.,0.,
@@ -149,7 +149,7 @@ c            plast(i,j)=0.
  1001    continue
  1002 continue
 *-------------------------------------------------------------------*
-* Input information about the reaction system and contral parameters* 
+* Input information about the reaction system and contral parameters*
 *-------------------------------------------------------------------*
 *              input section starts here                           *
 *-------------------------------------------------------------------*
@@ -162,7 +162,7 @@ cbz12/2/98end
 * read in the table for gengrating the transverse momentum
 * IN THE NN-->DDP PROCESS
        call tablem
-* several control parameters, keep them fixed in this code. 
+* several control parameters, keep them fixed in this code.
        ikaon=1
        nstar=1
        ndirct=0
@@ -255,7 +255,7 @@ c        WRITE(12,'(/10x,''*** CALCULATION DONE IN LAB-FRAME ***''/)')
 *-----------------------------------------------------------------------
 *
 * Start loop over many runs of different impact parameters
-* IF MANYB=1, RUN AT A FIXED IMPACT PARAMETER B0, OTHERWISE GENERATE 
+* IF MANYB=1, RUN AT A FIXED IMPACT PARAMETER B0, OTHERWISE GENERATE
 * MINIMUM BIAS EVENTS WITHIN THE IMPACT PARAMETER RANGE OF B_MIN AND B_MAX
        DO 50000 IMANY=1,MANYB
 *------------------------------------------------------------------------
@@ -264,12 +264,12 @@ c        WRITE(12,'(/10x,''*** CALCULATION DONE IN LAB-FRAME ***''/)')
 111       BX=1.0-2.0*RANART(NSEED)
        BY=1.0-2.0*RANART(NSEED)
        B2=BX*BX+BY*BY
-       IF(B2.GT.1.0) GO TO 111       
+       IF(B2.GT.1.0) GO TO 111
        B=SQRT(B2)*(BM-BI)+BI
        ELSE
        B=B0
        ENDIF
-c      WRITE(12,'(///10X,''RUN NUMBER:'',I6)') IMANY       
+c      WRITE(12,'(///10X,''RUN NUMBER:'',I6)') IMANY
 c      WRITE(12,'(//10X,''IMPACT PARAMETER B FOR THIS RUN:'',
 c     &             F9.3,'' FM''/10X,49(''*'')/)') B
 *
@@ -310,7 +310,7 @@ c       write(1053,992)ix,iz,rho(ix,0,iz)/0.168
 c       end do
 c       end do
 *-----------------------------------------------------------------------
-*       CALCULATE MOMENTA FOR T = 0.5 * DT 
+*       CALCULATE MOMENTA FOR T = 0.5 * DT
 *       (TO OBTAIN 2ND DEGREE ACCURACY!)
 *       "Reference: J. AICHELIN ET AL., PHYS. REV. C31, 1730 (1985)"
 *
@@ -507,7 +507,7 @@ c of pi0 at final time
          ADDK=LDDK/DT/num
          ANDK=LNDK/DT/num
 * PRINT OUT THE VARIOUS COLLISION RATES
-* (1)N-N COLLISIONS 
+* (1)N-N COLLISIONS
 c       WRITE(1010,9991)NT*DT,ACNND,ADOU,ADIRT,ADDRHO,ANNRHO+ANNOM
 c9991       FORMAT(6(E10.3,2X))
 * (2)PION-N COLLISIONS
@@ -555,7 +555,7 @@ c     &                           RNNK+RDDK+RNDK+RPN+Rppk
        sumene=sumene+etotal
 C for kaons, if there is a potential
 C CALCULATE THE ENERGY OF THE KAON ACCORDING TO THE IMPULSE APPROXIMATION
-C REFERENCE: B.A. LI AND C.M. KO, PHYS. REV. C 54 (1996) 3283. 
+C REFERENCE: B.A. LI AND C.M. KO, PHYS. REV. C 54 (1996) 3283.
          if(kpoten.ne.0.and.lb(i).eq.23)then
              den=0.
               IX = NINT( R(1,I) )
@@ -654,7 +654,7 @@ clin-11/09/00: FOR KAON*
         ATOTAL=ALP+ALD+ALN+0.5*ALN5
        ALE=FLOAT(LE)/FLOAT(NUM)
        ALKAON=FLOAT(LKAON)/FLOAT(NUM)
-* UPDATE MOMENTUM DUE TO COULOMB INTERACTION 
+* UPDATE MOMENTUM DUE TO COULOMB INTERACTION
         if (icou .eq. 1) then
 *       with Coulomb interaction
           iso=0
@@ -701,11 +701,11 @@ clin-11/09/00: FOR KAON*
  1025      continue
  1026   continue
         end if
-*       In the following, we shall:  
+*       In the following, we shall:
 *       (1) UPDATE MOMENTA DUE TO THE MEAN FIELD FOR BARYONS AND KAONS,
-*       (2) calculate the thermalization, temperature in a sphere of 
+*       (2) calculate the thermalization, temperature in a sphere of
 *           radius 2.0 fm AROUND THE CM
-*       (3) AND CALCULATE THE NUMBER OF PARTICLES IN THE HIGH DENSITY REGION 
+*       (3) AND CALCULATE THE NUMBER OF PARTICLES IN THE HIGH DENSITY REGION
        spt=0
        spz=0
        ncen=0
@@ -765,7 +765,7 @@ c     & ABS(IZ) .LT. MAXZ) THEN
        if(pel(ix,iy,iz).gt.2.0)nquark=nquark+1
        endif
 c*
-c If there is a kaon potential, propogating kaons 
+c If there is a kaon potential, propogating kaons
         if(kpoten.ne.0.and.lb(i).eq.23)then
         den=0.
 clin-4/2008:
@@ -785,7 +785,7 @@ c     !! GeV fm^3
           ecor = - akg*rnsg + (bkg*den)**2
           etotal = sqrt(P(1,i)**2+p(2,I)**2+p(3,i)**2+e(i)**2 + ecor)
           ecor = - akg + 2.*bkg**2*den + 2.*bkg*etotal
-c** G.Q. Li potential (END)           
+c** G.Q. Li potential (END)
         CALL GRADUK(IX,IY,IZ,GRADXk,GRADYk,GRADZk)
         P(1,I) = P(1,I) - DT * GRADXk*ecor/(2.*etotal)
         P(2,I) = P(2,I) - DT * GRADYk*ecor/(2.*etotal)
@@ -817,16 +817,16 @@ c     !! GeV fm^3
         P(1,I) = P(1,I) - DT * GRADXk*ecor/(2.*etotal)
         P(2,I) = P(2,I) - DT * GRADYk*ecor/(2.*etotal)
         P(3,I) = P(3,I) - DT * GRADZk*ecor/(2.*etotal)
-c** G.Q. Li potential (END)           
+c** G.Q. Li potential (END)
         endif
          endif
 c
 c for other mesons, there is no potential
-       if(j.gt.mass)go to 5800         
+       if(j.gt.mass)go to 5800
 c  with mean field interaction for baryons   (open endif below) !!sp05
 **      if( (iabs(lb(i)).eq.1.or.iabs(lb(i)).eq.2) .or.
 **    &     (iabs(lb(i)).ge.6.and.iabs(lb(i)).le.17) .or.
-**    &      iabs(lb(i)).eq.40.or.iabs(lb(i)).eq.41 )then  
+**    &      iabs(lb(i)).eq.40.or.iabs(lb(i)).eq.41 )then
         IF (ICOLL .NE. -1) THEN
 * check if the baryon has run off the lattice
 *             IX0=NINT(R(1,I)/DX)
@@ -836,7 +836,7 @@ c  with mean field interaction for baryons   (open endif below) !!sp05
 *             IPY0=NINT(P(2,I)/DPY)
 *             IPZ0=NINT(P(3,I)/DPZ)
 *      if ( (abs(ix0).gt.mx) .or. (abs(iy0).gt.my) .or. (abs(iz0).gt.mz)
-*     &  .or. (abs(ipx0).gt.mpx) .or. (abs(ipy0) 
+*     &  .or. (abs(ipx0).gt.mpx) .or. (abs(ipy0)
 *     &  .or. (ipz0.lt.-mpz) .or. (ipz0.gt.mpzp)) NLOST=NLOST+1
 clin-4/2008:
 c              IF (ABS(IX) .LT. MAXX .AND. ABS(IY) .LT. MAXX .AND.
@@ -869,14 +869,14 @@ c     &                                    ABS(IZ) .LT. MAXZ     ) THEN
         P(3,I) = P(3,I) - facl*DT * (GRADZ+asy*(GRADZN-GRADZP)*TZ)
                 end if                                                       
               ENDIF
-**          endif          !!sp05     
+**          endif          !!sp05
  5800       CONTINUE
  6000       CONTINUE
-c print out the average no. of particles in regions where the local 
-c baryon density is higher than 5*rho0 
+c print out the average no. of particles in regions where the local
+c baryon density is higher than 5*rho0
 c       write(1072,'(e10.3,2x,e10.3)')nt*dt,float(nbaryn)/float(num)
-C print out the average no. of particles in regions where the local 
-c energy density is higher than 2 GeV/fm^3. 
+C print out the average no. of particles in regions where the local
+c energy density is higher than 2 GeV/fm^3.
 c       write(1073,'(e10.3,2x,e10.3)')nt*dt,float(nquark)/float(num)
 c print out the no. of particles that have run off the lattice
 *          IF (NLOST .NE. 0 .AND. (NT/NFREQ)*NFREQ .EQ. NT) THEN
@@ -891,7 +891,7 @@ c print out the no. of particles that have run off the lattice
 *
 *        if (inout(5) .eq. 2) CALL ENERGY(NT,IPOT,NUM,MASS,EMIN,EMAX)
 *
-* 
+*
 * print out central baryon density as a function of time
        CDEN=RHO(0,0,0)/0.168
 cc        WRITE(1002,990)FLOAT(NT)*DT,CDEN
@@ -899,7 +899,7 @@ c        WRITE(1002,1990)FLOAT(NT)*DT,CDEN,denst/real(num)
 * print out the central energy density as a function of time
 cc        WRITE(1003,990)FLOAT(NT)*DT,PEL(0,0,0)
 c        WRITE(1003,1990)FLOAT(NT)*DT,PEL(0,0,0),edenst/real(num)
-* print out the no. of pion-like particles as a function of time 
+* print out the no. of pion-like particles as a function of time
 c        WRITE(1004,9999)FLOAT(NT)*DT,ALD,ALN,ALP,ALN5,
 c     &               ALD+ALN+ALP+0.5*ALN5
 * print out the no. of eta-like particles as a function of time
@@ -909,13 +909,13 @@ c1990       FORMAT(E10.3,2X,E10.3,2X,E10.3)
 c991       FORMAT(E10.3,2X,E10.3,2X,E10.3,2X,E10.3)
 c9999    FORMAT(e10.3,2X,e10.3,2X,E10.3,2X,E10.3,2X,
 c     1  E10.3,2X,E10.3)
-C THE FOLLOWING OUTPUTS CAN BE TURNED ON/OFF by setting icflow and icrho=0  
+C THE FOLLOWING OUTPUTS CAN BE TURNED ON/OFF by setting icflow and icrho=0
 c print out the baryon and meson density matrix in the reaction plane
         IF ((NT/NFREQ)*NFREQ .EQ. NT ) THEN
        if(icflow.eq.1)call flow(nt)
 cbz11/18/98
-c       if(icrho.ne.1)go to 10000 
-c       if (icrho .eq. 1) then 
+c       if(icrho.ne.1)go to 10000
+c       if (icrho .eq. 1) then
 cbz11/18/98end
 c       do ix=-10,10
 c       do iz=-10,10
@@ -930,7 +930,7 @@ cbz11/18/98end
 c992       format(i3,i3,e11.4)
        endif
 c print out the ENERGY density matrix in the reaction plane
-C CHECK LOCAL MOMENTUM EQUILIBRIUM IN EACH CELL, 
+C CHECK LOCAL MOMENTUM EQUILIBRIUM IN EACH CELL,
 C AND PERFORM ON-LINE FLOW ANALYSIS AT A FREQUENCY OF NFREQ
 c        IF ((NT/NFREQ)*NFREQ .EQ. NT ) THEN
 c       call flow(nt)
@@ -942,7 +942,7 @@ c       write(1056,992)ix,iz,rxy(ix,0,iz)
 c       end do
 c       end do
 c       endif
-C calculate the volume of high BARYON AND ENERGY density 
+C calculate the volume of high BARYON AND ENERGY density
 C matter as a function of time
 c       vbrho=0.
 c       verho=0.
@@ -959,7 +959,7 @@ c       write(1082,993)dt*nt,verho
 c993       format(e11.4,2x,e11.4)
 *-----------------------------------------------------------------------
 cbz11/16/98
-c.....for read-in initial conditions produce particles from read-in 
+c.....for read-in initial conditions produce particles from read-in
 c.....common block.
 c.....note that this part is only for cascade with number of test particles
 c.....NUM = 1.
@@ -1000,14 +1000,14 @@ clin-5/2008:
             NP = MASSR(IRUN)
             NP1 = NPI(IRUN)
 cbz10/05/99
-c            DO WHILE (FT1(NP1, IRUN) .GT. CT - DT .AND. 
+c            DO WHILE (FT1(NP1, IRUN) .GT. CT - DT .AND.
 c     &           FT1(NP1, IRUN) .LE. CT)
 cbz10/06/99
 c            DO WHILE (NPI(IRUN).LE.MULTI1(IRUN).AND.
 cbz10/06/99 end
 clin-11/13/00 finally read in all unformed particles and do the decays in ART:
 c           DO WHILE (NP1.LE.MULTI1(IRUN).AND.
-c    &           FT1(NP1, IRUN) .GT. CT - DT .AND. 
+c    &           FT1(NP1, IRUN) .GT. CT - DT .AND.
 c    &           FT1(NP1, IRUN) .LE. CT)
 c
                ctlong = ct
@@ -1018,25 +1018,25 @@ c
              endif
 c
             DO WHILE (NP1.LE.MULTI1(IRUN).AND.
-     &           FT1(NP1, IRUN) .GT. ((NT-1) * DT) .AND. 
+     &           FT1(NP1, IRUN) .GT. ((NT-1) * DT) .AND.
      &           FT1(NP1, IRUN) .LE. ctlong)
-clin-ma-5/2016 changed the following to 2nd line above to avoid bug 
-c     that leads to loss of hadrons inside ART due to finite accuracy 
+clin-ma-5/2016 changed the following to 2nd line above to avoid bug
+c     that leads to loss of hadrons inside ART due to finite accuracy
 c     [which results in (ct-dt) + dt != ct exactly]:
-c     &           FT1(NP1, IRUN) .GT. (CT - DT) .AND. 
+c     &           FT1(NP1, IRUN) .GT. (CT - DT) .AND.
                NP = NP + 1
                UDT = (CT - FT1(NP1, IRUN)) / EE1(NP1, IRUN)
-clin-10/28/03 since all unformed hadrons at time ct are read in at nt=ntmax-1, 
+clin-10/28/03 since all unformed hadrons at time ct are read in at nt=ntmax-1,
 c     their positions should not be propagated to time ct:
                if(nt.eq.(ntmax-1)) then
                   ftsvt(NP,IRUN)=FT1(NP1, IRUN)
                   if(FT1(NP1, IRUN).gt.ct) UDT=0.
                endif
-               RT(1, NP, IRUN) = GX1(NP1, IRUN) + 
+               RT(1, NP, IRUN) = GX1(NP1, IRUN) +
      &              PX1(NP1, IRUN) * UDT
-               RT(2, NP, IRUN) = GY1(NP1, IRUN) + 
+               RT(2, NP, IRUN) = GY1(NP1, IRUN) +
      &              PY1(NP1, IRUN) * UDT
-               RT(3, NP, IRUN) = GZ1(NP1, IRUN) + 
+               RT(3, NP, IRUN) = GZ1(NP1, IRUN) +
      &              PZ1(NP1, IRUN) * UDT
                PT(1, NP, IRUN) = PX1(NP1, IRUN)
                PT(2, NP, IRUN) = PY1(NP1, IRUN)
@@ -1045,7 +1045,7 @@ c     their positions should not be propagated to time ct:
                LT(NP, IRUN) = IARFLV(ITYP1(NP1, IRUN))
 clin-5/2008:
                dpertt(NP,IRUN)=dpp1(NP1,IRUN)
-clin-4/30/03 ctest off 
+clin-4/30/03 ctest off
 c     record initial phi,K*,Lambda(1520) resonances formed during the timestep:
 c               if(LT(NP, IRUN).eq.29.or.iabs(LT(NP, IRUN)).eq.30)
 c     1              write(17,112) 'formed',LT(NP, IRUN),PX1(NP1, IRUN),
@@ -1088,7 +1088,7 @@ cbz12/22/98end
       END IF
 cbz11/16/98end
 clin-5/2009 ctest off:
-c      call flowh(ct) 
+c      call flowh(ct)
 10000       continue
 *                                                                      *
 *       ==============  END OF TIME STEP LOOP   ================       *
@@ -1189,7 +1189,7 @@ c.....to copy ART particle info to COMMON /ARPRC1/
               GY1(I, IRUN) = R(2, IB)
               GZ1(I, IRUN) = R(3, IB)
 clin-10/28/03:
-c since all unformed hadrons at time ct are read in at nt=ntmax-1, 
+c since all unformed hadrons at time ct are read in at nt=ntmax-1,
 c their formation time ft1 should be kept to determine their freezeout(x,t):
 c              FT1(I, IRUN) = CT
               if(FT1(I, IRUN).lt.CT) FT1(I, IRUN) = CT
@@ -1197,9 +1197,9 @@ c              FT1(I, IRUN) = CT
               PY1(I, IRUN) = P(2, IB)
               PZ1(I, IRUN) = P(3, IB)
               XM1(I, IRUN) = E(IB)
-              EE1(I, IRUN) = SQRT(PX1(I, IRUN) ** 2 + 
+              EE1(I, IRUN) = SQRT(PX1(I, IRUN) ** 2 +
      &             PY1(I, IRUN) ** 2 +
-     &             PZ1(I, IRUN) ** 2 + 
+     &             PZ1(I, IRUN) ** 2 +
      &             XM1(I, IRUN) ** 2)
 c     !! sp 12/19/00
               PRO1(I, IRUN) = PROPER(IB)
